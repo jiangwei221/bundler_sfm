@@ -10,4 +10,6 @@ WORKDIR /home/bundler_sfm
 
 RUN make
 
+RUN cp /home/bundler_sfm/bin/libANN_char.so /usr/lib
+
 RUN echo "export PATH=/home/bundler_sfm/bin:$PATH" >> ~/.bashrc 
