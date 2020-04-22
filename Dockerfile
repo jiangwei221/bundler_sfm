@@ -9,3 +9,5 @@ RUN cd /home && git clone https://github.com/jiangwei221/bundler_sfm.git
 WORKDIR /home/bundler_sfm
 
 RUN make
+
+RUN echo -e "export /home/$USER/bin:$PATH" >> ~/.bashrc 
