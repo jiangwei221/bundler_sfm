@@ -10,4 +10,4 @@ WORKDIR /home/bundler_sfm
 
 RUN make
 
-RUN echo "export /home/$USER/bin:$PATH" >> ~/.bashrc 
+RUN echo "export /home/bundler_sfm/bin:$PATH" >> ~/.bashrc 
