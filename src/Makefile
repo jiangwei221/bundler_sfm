@@ -41,10 +41,10 @@ BUNDLER_OBJS=BaseApp.o BundlerApp.o keys.o Register.o Epipolar.o	\
 	ImageData.o BundleUtil.o BaseGeometry.o BundlerGeometry.o	\
 	BoundingBox.o BundleAdd.o ComputeTracks.o BruteForceSearch.o	\
 	BundleIO.o ProcessBundle.o BundleTwo.o Decompose.o		\
-	RelativePose.o Distortion.o TwoFrameModel.o LoadJPEG.o
+	RelativePose.o Distortion.o TwoFrameModel.o LoadJPEG.o LoadPNG.o
 
 BUNDLER_BASE_LIBS=-limage -lsfmdrv -lsba.v1.5 -lmatrix -lz -llapack -lblas \
-	-lcblas -lminpack -lm -l5point -ljpeg -lANN_char -lgfortran
+	-lcblas -lminpack -lm -l5point -ljpeg -lpng -lANN_char -lgfortran
 CERES_LIBS=-lceres -lcholmod -lccolamd -lcolamd -lamd -lcamd -lcxsparse \
 	-lsuitesparseconfig -lgomp -lglog -lpthread
 
@@ -85,34 +85,34 @@ $(BUNDLE2PLY): Bundle2Ply.o
 		-lmatrix -llapack -lblas -lcblas -lgfortran -lminpack
 	cp $@ ../bin
 
-$(BUNDLE2PMVS): Bundle2PMVS.o LoadJPEG.o
-	$(CXX) -o $@ $(CPPFLAGS) $(LIB_PATH) Bundle2PMVS.o LoadJPEG.o \
+$(BUNDLE2PMVS): Bundle2PMVS.o LoadJPEG.o LoadPNG.o
+	$(CXX) -o $@ $(CPPFLAGS) $(LIB_PATH) Bundle2PMVS.o LoadJPEG.o LoadPNG.o\
 		-limage -lmatrix -llapack -lblas -lcblas -lgfortran \
-		-lminpack -ljpeg
+		-lminpack -ljpeg -lpng
 	cp $@ ../bin
 
 $(BUNDLE2VIS): Bundle2Vis.o
 	$(CXX) -o $@ $(CPPFLAGS) $(LIB_PATH) Bundle2Vis.o
 	cp $@ ../bin
 
-$(RADIALUNDISTORT): RadialUndistort.o LoadJPEG.o
+$(RADIALUNDISTORT): RadialUndistort.o LoadJPEG.o LoadPNG.o
 	$(CXX) -o $@ $(CPPFLAGS) $(LIB_PATH) $^ \
 		-limage -lmatrix -llapack -lblas -lcblas -lgfortran \
-		-lminpack -ljpeg
+		-lminpack -ljpeg -lpng
 	cp $@ ../bin
 
-$(FISHEYEUNDISTORT): FisheyeUndistort.o BundleUtil.o LoadJPEG.o
+$(FISHEYEUNDISTORT): FisheyeUndistort.o BundleUtil.o LoadJPEG.o LoadPNG.o
 	$(CXX) -o $@ $(CPPFLAGS) $(LIB_PATH) $^ \
 		-limage -lmatrix -llapack -lblas -lcblas -lgfortran \
-		-lminpack -ljpeg
+		-lminpack -ljpeg -lpng
 	cp $@ ../bin
 
-SIFTDraw2: SIFTDraw2.o keys_lite.o LoadJPEG.o
-	$(CXX) -o $@ -g2 $^ $(LIB_PATH) -ljpeg -lz $(BUNDLER_LIBS)
+SIFTDraw2: SIFTDraw2.o keys_lite.o LoadJPEG.o LoadPNG.o
+	$(CXX) -o $@ -g2 $^ $(LIB_PATH) -ljpeg -lpng -lz $(BUNDLER_LIBS)
 	cp $@ ../../bin
 
-MatchDraw2: MatchDraw2.o keys_lite.o LoadJPEG.o
-	$(CXX) -o $@ -g2 $^ $(LIB_PATH) -ljpeg -lz $(BUNDLER_LIBS)
+MatchDraw2: MatchDraw2.o keys_lite.o LoadJPEG.o LoadPNG.o
+	$(CXX) -o $@ -g2 $^ $(LIB_PATH) -ljpeg -lpng -lz $(BUNDLER_LIBS)
 	cp $@ ../../bin
 
 clean:

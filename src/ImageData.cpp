@@ -43,6 +43,7 @@
 #include "util.h"
 
 #include "LoadJPEG.h"
+#include "LoadPNG.h"
 
 #define SUBSAMPLE_LEVEL 1
 
@@ -288,6 +289,13 @@ void ImageData::LoadImage() {
     jpeg_buf[strlen(m_name) - 2] = 'p';
     jpeg_buf[strlen(m_name) - 1] = 'g';
 
+    /* Check if there is a png file with the same basename */
+    char png_buf[256];
+    strcpy(png_buf, m_name);
+    png_buf[strlen(m_name) - 3] = 'p';
+    png_buf[strlen(m_name) - 2] = 'n';
+    png_buf[strlen(m_name) - 1] = 'g';
+
     /* Check if there is a bmp file with the same basename */
     char bmp_buf[256];
     strcpy(bmp_buf, m_name);
@@ -303,6 +311,8 @@ void ImageData::LoadImage() {
 
         // printf("[ImageData::LoadImage] Dimensions: %d x %d\n", 
         //        img->w, img->h);
+    } else if (FileExists(png_buf)){
+        img = LoadPNG(png_buf);
     } else if (FileExists(bmp_buf)) {
         img = img_read_bmp_file(bmp_buf);
     } else {
